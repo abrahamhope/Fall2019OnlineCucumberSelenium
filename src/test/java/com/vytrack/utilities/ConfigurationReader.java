@@ -4,6 +4,7 @@ import java.util.Properties;
 
 public class ConfigurationReader {
     private static Properties configFile;
+
     static {
         try {
             //location of properties file
@@ -20,7 +21,9 @@ public class ConfigurationReader {
             e.printStackTrace();
             throw new RuntimeException("Failed to load properties file!");
         }
+
     }
+
     /**
      * This method returns property value from configuration.properties file
      * @param keyName property name

@@ -13,8 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-public class BrowserUtils {
+public class BrowserUtilities {
     /**
      * Pause test for some time
      *
@@ -27,6 +28,7 @@ public class BrowserUtils {
             e.printStackTrace();
         }
     }
+
     /**
      * @param elements represents collection of WebElements
      * @return collection of strings
@@ -40,6 +42,7 @@ public class BrowserUtils {
         }
         return textValues;
     }
+
     /**
      * waits for backgrounds processes on the browser to complete
      *
@@ -48,12 +51,13 @@ public class BrowserUtils {
     public static void waitForPageToLoad(long timeOutInSeconds) {
         ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
         try {
-            WebDriverWait wait = new WebDriverWait(com.vytrack.utilities.Driver.getDriver(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeOutInSeconds);
             wait.until(expectation);
         } catch (Throwable error) {
             error.printStackTrace();
         }
     }
+
     /**
      * Clicks on an element using JavaScript
      *
@@ -63,14 +67,16 @@ public class BrowserUtils {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
+
     /**
      * Scroll to element using JavaScript
      *
      * @param element
      */
     public static void scrollTo(WebElement element) {
-        ((JavascriptExecutor) com.vytrack.utilities.Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
     /**
      * @param name screenshot name
      * @return path to the screenshot
@@ -80,17 +86,19 @@ public class BrowserUtils {
         name = new Date().toString().replace(" ", "_").replace(":", "-") + "_" + name;
         //where we gonna store a screenshot
         String path = "";
+
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             path = System.getProperty("user.dir") + "/test-output/screenshots/" + name + ".png";
         } else {
             path = System.getProperty("user.dir") + "\\test-output\\screenshots\\" + name + ".png";
         }
+
         System.out.println("OS name: " + System.getProperty("os.name"));
         System.out.println("Screenshot is here: " + path);
         //since our reference type is a WebDriver
         //we cannot see methods from TakesScreenshot interface
         //that's why do casting
-        TakesScreenshot takesScreenshot = (TakesScreenshot) com.vytrack.utilities.Driver.getDriver();
+        TakesScreenshot takesScreenshot = (TakesScreenshot) Driver.getDriver();
         //take screenshot of web browser, and save it as a file
         File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
         //where screenshot will be saved
@@ -102,5 +110,20 @@ public class BrowserUtils {
             e.printStackTrace();
         }
         return path;
+    }
+
+    /**
+     * This method will switch webdriver from current window
+     * to target window based on page title
+     * @param title of the window to switch
+     */
+    public static void scitchWindow(String title){
+        Set<String> windowHandles = Driver.getDriver().getWindowHandles();
+        for(String window : windowHandles){
+            Driver.getDriver().switchTo().window(window);
+            if(Driver.getDriver().getTitle().equals(title)){
+                break;
+            }
+        }
     }
 }

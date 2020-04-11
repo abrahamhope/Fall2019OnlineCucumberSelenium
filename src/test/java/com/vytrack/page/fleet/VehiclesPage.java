@@ -7,16 +7,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class VehiclesPage extends AbstractPageBase {
-    @FindBy (partialLinkText = "Create Car")
+
+    @FindBy(partialLinkText = "Create Car")
     private WebElement createCar;
 
 
-
-
     public void clickToCreateCar(){
-        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(createCar)).click();
     }
-
-
 }
