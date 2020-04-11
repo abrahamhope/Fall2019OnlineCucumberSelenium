@@ -24,9 +24,18 @@ public class LoginStepDefinitions {
         System.out.println("I logged in as a sales manager");
         loginPage.login("salesmanager110","UserUser123");
     }
+
+    @When("user logs in as a store manager")
+    public void user_logs_in_as_a_store_manager() {
+        System.out.println("I logged in as a store manager");
+
+        loginPage.login("storemanager85","UserUser123");
+
+    }
+
     @Then("user should verify that title is {string}")
     public void user_should_verify_that_title_is(String string) {
-        System.out.println("I verfied the title is Dashboard");
+        System.out.println("I verfied the title is "+string);
         Assert.assertEquals("Dashboard", Driver.getDriver().getTitle());
         Driver.closeDriver();
     }
