@@ -1,7 +1,6 @@
 package com.vytrack.page.activities;
 
-import com.automation.pages.AbstractPageBase;
-import com.automation.utilities.BrowserUtils;
+import com.vytrack.utilities.BrowserUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class CalendarEventsPage extends com.automation.pages.AbstractPageBase {
+public class CalendarEventsPage extends com.vytrack.page.AbstractPageBase {
 
 
     @FindBy(css = "[title='Create Calendar event']")
